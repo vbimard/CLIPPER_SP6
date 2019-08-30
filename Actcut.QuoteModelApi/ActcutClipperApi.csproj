@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8D33F151-8A5E-458C-82A0-C71606C09DA5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Actcut.ActcutClipperApi</RootNamespace>
+    <AssemblyName>Actcut.ActcutClipperApi</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Build\Bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Build\Bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Actcut.ActcutModelManager, Version=2.1.5.64604, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\build\Bin\Debug\Actcut.ActcutModelManager.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Actcut.ActcutModelManagerUI, Version=2.1.5.64604, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\build\Bin\Debug\Actcut.ActcutModelManagerUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Actcut.QuoteModel, Version=2.1.5.64604, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\build\Bin\Debug\Actcut.QuoteModel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Actcut.QuoteModelManager, Version=2.1.5.64604, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\build\Bin\Debug\Actcut.QuoteModelManager.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Actcut.QuoteModelManagerUI, Version=2.1.5.64604, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\build\Bin\Debug\Actcut.QuoteModelManagerUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Alma.BaseUI, Version=2.1.5.64604, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\build\Bin\Debug\Alma.BaseUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Alma.NetKernel, Version=2.1.5.64604, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\build\Bin\Debug\Alma.NetKernel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Wpm.Implement.ComponentEditor, Version=2.1.5.64604, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\build\Bin\Debug\Wpm.Implement.ComponentEditor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Wpm.Implement.Manager, Version=2.1.5.64604, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\build\Bin\Debug\Wpm.Implement.Manager.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Wpm.Schema.Kernel, Version=2.1.5.64604, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\build\Bin\Debug\Wpm.Schema.Kernel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClipperApi.cs" />
+    <Compile Include="Interfaces\IClipperApi.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

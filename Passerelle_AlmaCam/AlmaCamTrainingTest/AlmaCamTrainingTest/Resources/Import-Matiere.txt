@@ -1,0 +1,18 @@
+[QUALITY]
+OleDb=Provider=Microsoft.Jet.OLEDB.4.0;Data Source="C:\AlmaCAM\Bin\AlmaCam_Clipper\_Clipper\Import_PrixMatieres\";Extended Properties="text;HDR=yes;FMT=Delimited"
+DbSql=SELECT A,B,C,D,E,F/1000 FROM [Export_Nuance_Etat.csv]
+EntityType=_QUALITY
+ImportKey=_NAME
+_NAME=2
+_DENSITY=5
+[MATERIAL]
+OleDb=Provider=Microsoft.Jet.OLEDB.4.0;Data Source="C:\AlmaCAM\Bin\AlmaCam_Clipper\_Clipper\Import_PrixMatieres\";Extended Properties="text;HDR=yes;FMT=Delimited"
+DbSql=SELECT A,B,C,D,E,F,G/1000,H FROM [Export_Nuance_Etat.csv]
+EntityType=_MATERIAL
+ImportKey=_NAME
+_NAME=3
+_QUALITY:_NAME=2
+_BUY_COST=6
+_THICKNESS=4
+_CLIPPER_CODE_ARTICLE=7
+_COMMENTS=0

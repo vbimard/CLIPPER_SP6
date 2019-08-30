@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8D33F151-8A5E-458C-82A0-C71606C09DA5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AF_Actcut.ActcutClipperApi</RootNamespace>
+    <AssemblyName>AF_Actcut.ActcutClipperApi</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\..\..\..\Program Files %28x86%29\Clip Industrie\CLIPPER 8\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\..\..\..\..\AlmaCAM\Bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Actcut.ActcutModelManager, Version=2.1.5.37817, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\AlmaCAM\Bin\Actcut.ActcutModelManager.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Actcut.ActcutModelManagerUI, Version=2.1.5.37817, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\AlmaCAM\Bin\Actcut.ActcutModelManagerUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Actcut.QuoteModel, Version=2.1.5.37817, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\AlmaCAM\Bin\Actcut.QuoteModel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Actcut.QuoteModelManager, Version=2.1.5.37817, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\AlmaCAM\Bin\Actcut.QuoteModelManager.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Actcut.QuoteModelManagerUI, Version=2.1.5.37817, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\AlmaCAM\Bin\Actcut.QuoteModelManagerUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AF_ImportTools, Version=2.1.5.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\AlmaCAM\Bin\AF_ImportTools.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Alma.BaseUI, Version=2.1.5.37817, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\AlmaCAM\Bin\Alma.BaseUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Alma.NetKernel, Version=2.1.5.37817, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\AlmaCAM\Bin\Alma.NetKernel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Wpm.Implement.ComponentEditor, Version=2.1.5.38790, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\AlmaCAM\Bin\Wpm.Implement.ComponentEditor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Wpm.Implement.Manager, Version=2.1.5.38790, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\AlmaCAM\Bin\Wpm.Implement.Manager.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Wpm.Schema.Kernel, Version=2.1.5.37817, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\AlmaCAM\Bin\Wpm.Schema.Kernel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClipperApi.cs" />
+    <Compile Include="Interfaces\IClipperApi.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "C:\AlmaCAM\Bin\AF_Actcut.ActcutClipperApi.dll"  "C:\AlmaCAM\Bin\AlmaCam_Clipper\DLL\SP6\AF_Actcut.ActcutClipperApi.dll"
+copy "C:\AlmaCAM\Bin\AF_Actcut.ActcutClipperApi.dll" "C:\Program Files (x86)\Clip Industrie\CLIPPER 8\AF_Actcut.ActcutClipperApi.dll"
+copy "C:\AlmaCAM\Bin\AF_Actcut.ActcutClipperApi.dll"  "\\ALMA-FILES\Technique-AS\SOFT\AlmaCam\Template\Clipper\DEBUG_CLIPPER\debug_DLL_SP6\AF_Actcut.ActcutClipperApi.dll"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
