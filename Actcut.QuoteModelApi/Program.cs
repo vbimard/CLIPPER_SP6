@@ -21,7 +21,7 @@ namespace AF_Export_Devis_Clipper
 {
     class Program
     {
-        //private static ClipperApi ClipperApi = null;
+        
         private static IContext Context = null;
         private static string AlmaCamBinFolder = null;
         private static string ParamFolder = null;

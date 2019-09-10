@@ -21,7 +21,9 @@ using System.Drawing.Drawing2D;
 using log4net;
 
 //namespace Actcut.QuoteModelManager
-
+/// <summary>
+/// compatibilité sp6
+/// </summary>
 namespace AF_Export_Devis_Clipper
 {
 
