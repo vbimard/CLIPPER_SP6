@@ -403,7 +403,7 @@ namespace Wpm.Implement.ModelSetting
                     {
                         IParameterDescription parameterDescription = new ParameterDescription(context.Kernel.UnitSystem, true);
                         parameterDescription.Key = "AF_ACTIVATE_QTY_ON_SENDTOWSHOP";
-                        parameterDescription.Name = "Qté par defaut des chute AF des l'envois à la coupe";
+                        parameterDescription.Name = "Qté par defaut des chutes AF des l'envoie à la coupe";
                         parameterDescription.ParameterDescriptionType = ParameterDescriptionType.Int;
                         parameterDescription.DefaultValue = 0;
                         commandTypeFactory.ParameterList.Add(parameterDescription);

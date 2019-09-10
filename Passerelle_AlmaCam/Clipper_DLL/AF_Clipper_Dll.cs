@@ -4438,7 +4438,7 @@ namespace AF_Clipper_Dll
                 //verification de l'acces
                 if (File_Tools.HasAccess(export_gpao_path)) {
                     //creation du fichier de retour pour le module de decoupe 
-                    clipper_nest_infos.Export_NestInfosToFile(export_gpao_path);
+                    clipper_nest_infos.Export_NestInfosToFile(nesting_to_cut,export_gpao_path);
                 }
 
                 AF_ImportTools.SimplifiedMethods.NotifyMessage("export rp", "export terminé");
@@ -4530,9 +4530,39 @@ namespace AF_Clipper_Dll
 
         }
         ///export//
+
+            ///extraction de la fiche atelier
+        public string Get_WorkshopDocument(IContext context, IEntity NestingEntity, string outputpath)
+        {
+           
+            try
+            {
+                string cnFileExtractDirectory = "";
+                IMachineManager machineManager = new MachineManager();
+                ICutMachine cutMachine = machineManager.GetCutMachine(context, NestingEntity.Id);
+                ICutMachineResource cutMachineResource = cutMachine.GetCutMachineResource(true);
+
+                //Extract the cnfile directory from the ressource of the machine
+                if (string.IsNullOrEmpty(outputpath)) {
+                    outputpath = cutMachineResource.GetSimpleParameterValueAsString("OUTPUT_DIRECTORY");
+                AF_ImportTools.File_Tools.CreateDirectory(cnFileExtractDirectory);
+                }
+                else
+                {
+                    AF_ImportTools.File_Tools.CreateDirectory(outputpath);
+                }
+                //Extracted the workshop document of the nesting (named as the cn file of the nesting) as pdf in the cn file directory
+                ActcutNestingManager actcutNestingManager = new ActcutNestingManager();
+                actcutNestingManager.ExtractWorkshopDocumentAsPdf(context, NestingEntity, outputpath, NestingEntity.GetFieldValueAsString("_NAME"));
+                return outputpath;
+            }
+
+            catch {//erreur sur le chemin renvoie un chaine vide
+                        return  "";
+                    }
+        }
         
-        
-        public override void Export_NestInfosToFile(string OutputDirectory)
+        public override void Export_NestInfosToFile(IEntity nesting_to_cut,string OutputDirectory)
         {
             // base.Export_NestInfosToFile(export_gpao_file);//
 
@@ -4591,7 +4621,7 @@ namespace AF_Clipper_Dll
                                     HEADER[iheader++] = "1"; //mutliplicité forcée a 1 pour le moment
                                     HEADER[iheader++] = SimplifiedMethods.NumberToString((Nesting_TotalTime / 60), format); //SimplifiedMethods.NumberToString((tole.Calculus_GPAO_Parts_Total_Time/ 60),format);//temps de chargement// multiplicité toujour a 1
                                     HEADER[iheader++] = SimplifiedMethods.EmptyString(Nesting_CentreFrais_Machine);//centre de frais
-                                    HEADER[iheader++] = "";
+                                    HEADER[iheader++] = "";//Get_WorkshopDocument(tole.Material_Entity.Context, nesting_to_cut);//";//chemin vers pdf fiche atelier
                                     HEADER[iheader++] = SimplifiedMethods.EmptyString(Nesting_Emf_File);//emf
                                     HEADER[iheader++] = SimplifiedMethods.EmptyString(NUMMATLOT);   //numero de lot
                                     HEADER[iheader++] = SimplifiedMethods.NumberToString(((Nesting_Sheet_loadingTimeEnd+ Nesting_Sheet_loadingTimeInit) / 60), format);//temps de dechargement // multiplicité toujour a 1
@@ -4631,7 +4661,7 @@ namespace AF_Clipper_Dll
                                         //correctif sur erreur li le ratio des temps de coupe est le meme que celui des poids
                                         //double ratio = ((part.Weight * part.Nested_Quantity) / Nesting__Gpao_Parts_Total_Weight) ;
                                         double ratio =  ((part.Weight * part.Nested_Quantity)/ Nesting__Gpao_Parts_Total_Weight)* Nesting_Multiplicity;
-                                        PART[ipart++] = SimplifiedMethods.NumberToString(ratio, format);//temps de coupe
+                                        PART[ipart++] = SimplifiedMethods.NumberToString(ratio, format);//temps de coupe//
 
 
                                         partline = SimplifiedMethods.WriteTableToLine(PART, ipart, Separator);

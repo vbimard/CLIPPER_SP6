@@ -931,7 +931,8 @@ namespace AF_Export_Devis_Clipper
 
                 long partQty = 0;
                 partQty = partEntity.GetFieldValueAsLong("_PART_QUANTITY");
-
+                //reference= partEntity.GetFieldValueAsString("_REFERENCE");
+                GetReference(partEntity, "PART", true, out reference, out modele);
                 if (partQty > 0)
                 {
                     /*
@@ -978,10 +979,7 @@ namespace AF_Export_Devis_Clipper
                     GetOffreTable(quoteEntity, partEntity, "PART", formatProvider, paymentRule, out data, out i);
                     WriteData(data, i, ref file);
 
-
-
-
-
+                                       
 
                     ////observations
 
@@ -1743,21 +1741,21 @@ namespace AF_Export_Devis_Clipper
                     if (sheetList == null)
                     {
                         // Liste NULL: Ne devrait pas exister. Si bug => Throw:
-                        MessageBox.Show("La pièce " + partEntity.GetFieldValueAsString("_NAME") + "en mode placement n'est placée" +
+                        MessageBox.Show("La pièce " + partEntity.GetFieldValueAsString("_REFERENCE") + " en mode placement n'est placée" +
                                      "\ndans aucun format. Il n'existe aucun format, vérifiez le devis.");
                         throw new NoNullAllowedException();
                     }
                     if (sheetList.Count == 0)
                     {
                         // Aucune liste de format???
-                        MessageBox.Show("La pièce " + partEntity.GetFieldValueAsString("_NAME") + "en mode placement n'est placée" +
+                        MessageBox.Show("La pièce " + partEntity.GetFieldValueAsString("_REFERENCE") + " en mode placement n'est placée" +
                                      "\ndans aucun format. La liste des formats est vide, vérifiez le devis.");
                         throw new IndexOutOfRangeException();
                     }
                     // 4.1.1 / Message 1 seul format de placement doit être sélectionné (pour cohérence avec Clipper) : Utilisation du 1er format
                     if (sheetList.Count > 1)
                     {
-                        MessageBox.Show("La pièce " + partEntity.GetFieldValueAsString("_NAME") + " est placée dans " + sheetList.Count.ToString() + "formats différents" +
+                        MessageBox.Show("La pièce " + partEntity.GetFieldValueAsString("_REFERENCE") + " est placée dans " + sheetList.Count.ToString() + " formats différents" +
                                       "\nSeul un  format peut être transmis et interprété dans Clipper," +
                                       "\naussi les données transmises pour cette pièce seront basées sur" +
                                       "\nle premier format", "Devis " + "quote.Nom", MessageBoxButtons.OK);
@@ -2005,11 +2003,7 @@ namespace AF_Export_Devis_Clipper
                     string partReference = null;
                     string partModele = null;
                     GetReference(partEntity, "PART", false, out partReference, out partModele);
-
-
-
-
-
+                                                                             
                     data[i++] = "ENDEVIS";
                     data[i++] = GetQuoteNumber(quoteEntity); //N° devis
                     data[i++] = EmptyString(clientEntity.GetFieldValueAsString("_EXTERNAL_ID")).ToUpper(); //Code client

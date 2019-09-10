@@ -16,6 +16,7 @@ using System.Runtime.Serialization;
 using System.Data.Common;
 using Actcut.CommonModel;
 using AF_Clipper_Dll;
+using System.Reflection;
 
 namespace AF_Import_ODBC_Clipper_AlmaCam
 
@@ -1375,6 +1376,7 @@ namespace AF_Import_ODBC_Clipper_AlmaCam
 
                 ///Update material price
                 ///mise a jour des prix matiere sur les toles multi et monodim//
+                AF_ImportTools.SimplifiedMethods.NotifyMessage("IMPORT MATIERE", "Mise à jour des prix matiere sur les toles multi et monodim...");
                 foreach (var t in CLIPPER_TOLE_LIST)
                 {
 
@@ -1459,13 +1461,346 @@ namespace AF_Import_ODBC_Clipper_AlmaCam
 
             return integrity;
         }
+        /// <summary>
+        /// N'est pas utiliser car lance en automatique a l'import du stock
+        /// </summary>
+        public void Adjust_Stock_Prices()
+        {
 
 
+            try
+            {
+                //  logFile.WriteLine("mise a jour des matieres dans la base " + contextlocal.Model.DatabaseName);
+                //ecrirture de la liste des matiere//
+                //recuperation de la liste des matieres almacam
+                IEntityList qualityentitylist = ContextLocal.EntityManager.GetEntityList("_QUALITY");
+                IEntityList materialentitylist = ContextLocal.EntityManager.GetEntityList("_MATERIAL");
+                IList<string> qualities_To_Create = new List<string>();
+                qualityentitylist.Fill(false);
+                IList<IEntity> qualitylist = new List<IEntity>();
+                //select distincte supprime les doublons
+                qualitylist = qualityentitylist.Distinct().ToList();
+                bool newdatabase = qualitylist.Count == 0;
+                ////liste des qualité de materiaux
+                IDictionary<long, string> updatedstringqualitylist = new Dictionary<long, string>();
+
+                //////
+                ///
+                /////recuperaiton du stock alma not ommitted
+                #region QUERY
+                IEntityType stocktype = ContextLocal.Kernel.GetEntityType("_STOCK");
+
+                
+                 //condition AF_IS_OMMITED FALSE 
+                    IConditionType AF_IS_OMMITED_FALSE = null;
+                    AF_IS_OMMITED_FALSE = ContextLocal.Kernel.ConditionTypeManager.CreateSimpleConditionType(
+                     stocktype.ExtendedEntityType.GetExtendedField("_STOCK\\AF_IS_OMMITED"),
+                     ConditionOperator.Equal,
+                     ContextLocal.Kernel.ConditionTypeManager.CreateConditionTypeConstantParameter("AF_IS_OMMITED", false));
+
+                //condition "IDCLIP" not empty
+                IConditionType IDCLIP_NOT_EMPTY = null;
+                IDCLIP_NOT_EMPTY = ContextLocal.Kernel.ConditionTypeManager.CreateSimpleConditionType(
+                     stocktype.ExtendedEntityType.GetExtendedField("_STOCK\\IDCLIP"),
+                     ConditionOperator.NotEqual,
+                      ContextLocal.Kernel.ConditionTypeManager.CreateConditionTypeConstantParameter("IDCLIP", string.Empty));
+
+               
+
+                //full_UnOmitted_stock
+                /// recuperation de tout le stock
+                /// full_sheet_stocks = contextlocal.EntityManager.GetEntityList("_STOCK", LogicOperator.And, "AF_IS_OMMITED", ConditionOperator.Equal, false, "AF_STOCK_CFAO", ConditionOperator.Equal, false, "FILENAME", ConditionOperator.Equal, string.Empty);
+                //contextlocal.EntityManager.GetEntityList("_STOCK", LogicOperator.And, "AF_IS_OMMITED", ConditionOperator.Equal, false, "AF_STOCK_CFAO", ConditionOperator.Equal, false, "FILENAME", ConditionOperator.Equal, string.Empty);
+                IConditionType new_full_stock_condition_type = null;
+                new_full_stock_condition_type = ContextLocal.Kernel.ConditionTypeManager.CreateCompositeConditionType(
+                    LogicOperator.And,
+                    IDCLIP_NOT_EMPTY,
+                    AF_IS_OMMITED_FALSE  // car il faut detecté toutes les toles pour eviter les doublons
+                    //AF_STOCK_CFAO_FALSE,
+                    //FILENAME_EMPTY
+                    );
+
+                //recuperation du stock non ommis et possédant un idclip
+
+                IQuery QUERY_ALMA_STOCK = ContextLocal.QueryManager.CreateQuery("_STOCK", new_full_stock_condition_type);
+
+                #endregion
+
+                #region RECUPERATION DES TOLES CLIPPER ENCORE ACYIVE DANS CAM
+                string PHASE = "  MAJ DES DONNEES DES TOLES ACTIVES";
+                int etape = 0;
+                string etapemessage = "";
+                string methodename= MethodBase.GetCurrentMethod().Name;
+
+                etape++;
+                etapemessage = etape.ToString() ;
+                SimplifiedMethods.NotifyMessage(methodename, etapemessage + " Maj des données clipper...");
+                Alma_Log.Write_Log_Important(methodename + "******************************************** TRAITEMENT NOUVELLE TOLES ********************************** ");
+                /// on liste les toles pleines du nouveau stock
+
+                IExtendedEntityList new_full_stocks = null;
+               
+                var new_full_stocks_dictionnary = new Dictionary<string, IEntity>();
+                //new_full_sheet_stocks = contextlocal.EntityManager.GetExtendedEntityList(QUERY_NEW_FULL_SHEET_STOCK);
+                new_full_stocks = ContextLocal.EntityManager.GetExtendedEntityList(QUERY_ALMA_STOCK);
+                new_full_stocks.Fill(false);
+
+                if (new_full_stocks.Count() == 0)
+                {
+                    SimplifiedMethods.NotifyMessage(methodename, "Aucun Stock à mettre à jour...");
+                    Alma_Log.Write_Log(methodename + PHASE + " nombre de toles non omises et possédant un idclip =0 : Aucun Stock à mettre à jour ");
+
+                }
+                else
+                {
+                    SimplifiedMethods.NotifyMessage(methodename, new_full_stocks.Count().ToString() + " Toles à mettre à jour...");
+                    Alma_Log.Write_Log(methodename + PHASE + new_full_stocks.Count().ToString() + " Toles à mettre à jour...");
+
+                    IList<IExtendedEntity> almacamstockXentities = new List<IExtendedEntity>();
+                    almacamstockXentities = new_full_stocks.ToList();
+
+                    ///////detection des qualités a creer//// 
+                    logFile.WriteLine("creation de la liste du stock de clipper ");
+                    // on parcours le stock alma //                   
+                    foreach (IExtendedEntity currentXstock in almacamstockXentities)
+                    {
+                        string idclip = null;
+                        idclip = currentXstock.Entity.GetFieldValueAsString("IDCLIP");
+                        long Price = 0;
+                        bool MultiDim = true;
+                        foreach (Clipper_Material m in CLIPPER_MATERIAL_LIST)
+                                {//MISE A JOUR DES PRIX des toles
+
+                                    /*
+                          currentXstock.SetFieldValue("_BUY_COST", t.PRIXART);
+                          currentXstock.SetFieldValue("_AS_SPECIFIC_COST", !t.IsMultiDim);
+                          currentXstock.Save();
+
+                          //stock
+                          currentXstock.SetFieldValue("AF_IS_MULTIDIM", t.IsMultiDim);
+                          currentXstock.Save();
+                          */
+
+                        }
+
+
+
+
+                    }
+
+
+                   
+                    //purge
+                    almacamstockXentities.Clear();
+                    #endregion
+
+                }
+
+                //vidange memoire
+                new_full_stocks = null;
+                Dispose();
+               
+
+                ///////////
+                ///creation des matieres assocées au qualités
+                //mise a jour de la liste des matiere
+                // on ne prends que les matiere de type 3  (tole/plat)         
+
+                foreach (Clipper_Material m in CLIPPER_MATERIAL_LIST)
+                {
+
+                    // Find material           
+                    IEntity currentQuality = qualitylist.Where(q => q.DefaultValue.Equals(m.Quality)).FirstOrDefault();
+                    //update
+                    currentQuality.SetFieldValue("_NAME", m.Quality);
+                    currentQuality.SetFieldValue("_DENSITY", (m.Densite) / 1000);
+                    //calcul du prix moyen toutes epaisseurs confondues
+                    //currentQuality.SetFieldValue("_BUY_COST", (CLIPPER_MATERIAL_LIST.Average(p => p.PRIXART)));
+                    //currentQuality.SetFieldValue("_OFFCUT_COST", (CLIPPER_MATERIAL_LIST.Average(p => p.PRIXART) / 1000));
+                    currentQuality.SetFieldValue("_COMMENTS", m.Comments);
+                    currentQuality.Save();
+                    //on rempli la liste des qualités
+
+                    if (currentQuality != null)
+                    {
+                        if (!updatedstringqualitylist.ContainsKey(currentQuality.Id))
+                        {
+                            updatedstringqualitylist.Add(currentQuality.Id, m.Quality);
+                        }
+                    }
+
+                }
+
+
+                //création des matieres   ---> pas d'unicité (voir dans la requete)
+                //on rempli une liste de keypair de type uidkey,ientity matiere pour detecter les doublons uidkey est une cle interne a l'obkey clipper matierial
+                //
+                logFile.WriteLine("creation des matieres assocées aux qualités  ");
+                foreach (var currentstringquality in updatedstringqualitylist)
+                {
+                    {   //recuperation de la lisre de matieres associée a la qualité choisie
+
+                        IEntityList almacam_materialentitylist = ContextLocal.EntityManager.GetEntityList("_MATERIAL", "_QUALITY", ConditionOperator.Equal, currentstringquality.Key);
+                        almacam_materialentitylist.Fill(false);
+
+                        //construction de la liste des keypair (voir pour mettre un distionnaire si trop lent)
+                        IList<IEntity> almacam_material_list = new List<IEntity>();
+                        almacam_material_list = almacam_materialentitylist.ToList();
+                        //detection des doublons
+                        List<KeyValuePair<string, IEntity>> almacam_material_UiKey = new List<KeyValuePair<string, IEntity>>();
+                        foreach (Entity e in almacam_material_list)
+                        {
+                            string quality = e.GetFieldValueAsEntity("_QUALITY").GetFieldValueAsString("_NAME");
+                            double thickness = e.GetFieldValueAsDouble("_THICKNESS");
+                            //Clipper_Material.GetMaterial_Uidkey(quality, thickness);
+                            almacam_material_UiKey.Add(new KeyValuePair<string, IEntity>(quality + "*" + thickness, e));
+                        }
+
+                        //on se limite aux matiere des plats/toles
+                        foreach (Clipper_Material m in this.CLIPPER_MATERIAL_LIST.Where(t => t.Type == 3))
+                        {
+                            if (m.Quality == currentstringquality.Value && m.Type == 3)
+                            {
+
+                                IEntity currentmaterial = null;
+
+                                //IEntity currentmaterial = almacam_material_list.Where(q => q.GetFieldValueAsString("_NAME").Equals(m.GetMaterialName())).FirstOrDefault();
+                                //si la clé est retrouvé alors c'est un update sinon c'est une creation
+                                if (almacam_material_UiKey.Where(kvp => kvp.Key == m.Uidkey.Split('_')[0]).Count() > 0)
+                                {
+                                    currentmaterial = almacam_material_UiKey.First(kvp => kvp.Key == m.Uidkey.Split('_')[0]).Value;
+                                }
+
+
+                                //creation
+                                if (currentmaterial == null)
+                                {
+                                    //creation de la matiere et sauvegarde//
+                                    currentmaterial = ContextLocal.EntityManager.CreateEntity("_MATERIAL");
+                                    logFile.WriteLine("creation de la matieres   " + m.GetMaterialName());
+                                    currentmaterial.Save();
+
+                                }
+
+                                //update and save
+                                logFile.WriteLine("mise à jour de la matiere :   " + m.GetMaterialName());
+
+                                currentmaterial.SetFieldValue("_NAME", m.GetMaterialName());
+                                currentmaterial.SetFieldValue("_QUALITY", currentstringquality.Key);
+                                currentmaterial.SetFieldValue("_THICKNESS", m.Thickness);
+                                currentmaterial.SetFieldValue("_BUY_COST", (m.PRIXART) / 1000);
+                                //on rempli le code sur les multidim uniquement
+                                if (m.IsMultiDim)
+                                {
+                                    currentmaterial.SetFieldValue("_CLIPPER_CODE_ARTICLE", m.COARTI);
+                                }
+
+
+                                IEntityList currentstocks = ContextLocal.EntityManager.GetEntityList("_STOCK", "_NAME", ConditionOperator.Equal, m.COARTI);
+                                currentstocks.Fill(false);
+
+
+                                if (currentstocks.Count() > 0)
+                                {
+                                    IEntity currentSheet = currentstocks.FirstOrDefault().GetFieldValueAsEntity("_SHEET");
+                                    currentmaterial.SetFieldValue("AF_DEFAULT_SHEET", currentSheet.GetFieldValueAsString("_REFERENCE"));
+                                    currentSheet = null;
+                                }
+
+                                currentmaterial.SetFieldValue("_COMMENTS", m.Comments);
+                                currentmaterial.Save();
+
+                                //on set le nom standard
+                                CommonModelBuilder.ComputeMaterialName(currentmaterial.Context, currentmaterial.GetFieldValueAsEntity("_QUALITY"), currentmaterial);
+                                currentmaterial.Save();
+                            }
+                        }
+
+
+
+
+
+
+
+                        //pas utils mais au cas ou
+                        almacam_materialentitylist = null;
+                        almacam_material_list = null;
+
+
+                    }
+                }
+
+
+
+
+                ///Update material price
+                ///mise a jour des prix matiere sur les toles multi et monodim//
+                foreach (var t in CLIPPER_TOLE_LIST)
+                {
+
+
+                    //pour le momelnt on ne trie pas sur les toles deja traitées.List<long> TreatedSheetList = new List<long>();
+                    // Find material           
+                    IEntityList currentstocks = ContextLocal.EntityManager.GetEntityList("_STOCK", "_NAME", ConditionOperator.Equal, t.COARTI);
+                    currentstocks.Fill(false);
+
+                    if (currentstocks.Count() > 0)
+                    {
+                        //sheet
+
+                        //IEntity currentstock = currentstocks.FirstOrDefault();
+                        foreach (var currentstock in currentstocks)
+                        {
+
+
+                            IEntity currentSheet = currentstock.GetFieldValueAsEntity("_SHEET");
+                            currentSheet.SetFieldValue("_BUY_COST", t.PRIXART);
+                            currentSheet.SetFieldValue("_AS_SPECIFIC_COST", !t.IsMultiDim);
+                            currentSheet.Save();
+
+                            //stock
+                            currentstock.SetFieldValue("AF_IS_MULTIDIM", t.IsMultiDim);
+
+                            currentstock.Save();
+                            currentSheet = null;
+
+                        }
+
+                    }
+
+
+
+
+
+
+                }
+
+
+
+
+                //*//
+
+                logFile.Flush();
+
+                this.Close();
+            }
+            catch (Exception ie)
+            {
+                logFile.WriteLine("Erreur import matiere non definie : " + ie.Message);
+                //MessageBox.Show(ie.Message);
+            }
+            finally
+            {
+
+                logFile.WriteLine("Import ended ");
+            }
+
+        }
 
     }
    
+  
 
-   
 
     /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// </summary>

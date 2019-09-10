@@ -25,6 +25,7 @@ namespace Wpm.Implement.ModelSetting
                 parameterValue.SetValue(@"using System;
 using System.Diagnostics;
 using Wpm.Implement.Manager;
+using System.Windows.Forms;
 
 namespace Actcut.QuoteModelManager
 {
@@ -33,6 +34,15 @@ namespace Actcut.QuoteModelManager
         public override string Execute(IEntity quoteEntity, bool copy, IEntity sourceQuoteEntity)
         {
             string reference = """";
+            //test client //
+			// si un blocage est active sur clipper alors le risque financier est <>0
+			string risk = quoteEntity.GetFieldValueAsEntity(""_FIRM"").GetFieldValueAsString(""_FINANCIAL_RISK"");
+			if (risk !=""0""){ MessageBox.Show(""Attention !! Ce client possede des conditions de blocage sur Clipper"");}
+			// en cours >1000
+			double limite = 10000;  // limite en euros
+			double encours = quoteEntity.GetFieldValueAsEntity(""_FIRM"").GetFieldValueAsDouble(""_IN_PROGRESS_ACCOUNTING"");
+			if (encours >limite){ MessageBox.Show(""Attention !! Ce client possede un en cours comptable trop important"");}
+
 			//quoteEntity.SetFieldValue(""_ACCEPTANCE_PERIOD"",5);
 			Int64 offset= quoteEntity.Context.ParameterSetManager.GetParameterValue(""_EXPORT"", ""_CLIPPER_QUOTE_NUMBER_OFFSET"").GetValueAsLong();
 			Int64 iddevis=quoteEntity.GetFieldValueAsLong(""_INC_NO"")+offset;

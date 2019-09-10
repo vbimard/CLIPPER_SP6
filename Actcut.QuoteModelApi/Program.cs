@@ -31,7 +31,9 @@ namespace AF_Export_Devis_Clipper
         //IContext contextlocal;
         //
         /*exemple argument
-         Action=ExportQuote Db="AlmaCAM_Clipper" QuoteNumber="-1" OrderNumber="alma" ExportFile="c:\temps"
+         Action=ExportQuote Db="AlmaCAM_Clipper" QuoteNumber="1" OrderNumber="alma" ExportFile="c:\temps"
+
+         Action=GetQuote Db="AlmaCAM_Clipper" QuoteNumber="-1"
              
              */
         static void Main(string[] args)
@@ -62,12 +64,14 @@ namespace AF_Export_Devis_Clipper
             { arg += s + " "; }
             MessageBox.Show(arg);
             MessageBox.Show(action +" user "+ user + " database "+ db + " quote number "+ quoteNumber + " order "+ orderNumber + " export "+ exportFile + " "  );
-            #endif
+#endif
 
+            action=arguments[1].Split('=')[1];
 
-            if (exportFile == null)
+            if (exportFile == null && action == "ExportQuote")
             {
-                action = "ExportQuote";
+                
+                //action = "ExportQuote";
                 user = "SUPER";
                 //db = "AlmaCAM_Clipper_7";
                 db = "AlmaCAM_Clipper";
@@ -82,6 +86,15 @@ namespace AF_Export_Devis_Clipper
                 //quoteNumber = -1;
                 orderNumber = "alma";
                 exportFile = "";// @"c:\Temps\TEST.TXT";
+
+            }
+            else
+            {
+
+                action = arguments[1].Split('=')[1];
+                db = arguments[2].Split('=')[1]; ;
+                orderNumber = arguments[3].Split('=')[1]; ;
+
 
             }
 
@@ -121,22 +134,18 @@ namespace AF_Export_Devis_Clipper
                     string database;
                     database = db;
 
-                    Console.WriteLine("conecting database...");
+                    Console.WriteLine("connecting database...");
 
                     contextlocal = Context;//
 
-                    Console.WriteLine("conecting database...");
+                    Console.WriteLine("connecting database...");
 
 
 
                     //  //
 
                     IQuoteManagerUI quoteManagerUI = new QuoteManagerUI();
-                    //IEntity quoteEntity = quoteManagerUI.GetQuoteEntity(contextlocal, quoteNumber);
-                    //IEntityList quoteEntitylist = contextlocal.EntityManager.GetEntityList("_QUOTE_SENT", "_REFERENCE", ConditionOperator.Equal, quoteNumber.ToString());
-                    //quoteEntitylist.Fill(false);
-                    //IEntity quoteEntityFound = quoteEntitylist.FirstOrDefault();
-                    //Int64 devisid = Convert.ToInt64(quoteEntityFound.Id);
+                   
                     IEntity quoteEntity = quoteManagerUI.GetQuoteEntity(contextlocal, quoteNumber);
                     if (string.IsNullOrEmpty(exportFile)){
                         IParameterValue iparametervalue;
@@ -175,18 +184,52 @@ namespace AF_Export_Devis_Clipper
 
             else if (action == "GetQuote" && db != null)
             {
+
                 bool ret = Init(db, user);
                 if (ret)
                 {
-                    long quoteId;
-                    //bool status = AF_Export_Devis_Clipper.GetQuote(out quoteId);
-                    // Environment.ExitCode = (int)quoteId;
-                }
-                else
-                {
+                    IContext contextlocal;
+                    IEntity quote = null;
+                    IEntityList quotelist = null;
+                    //bool return;
+
+                    string database;
+                    database = db;
+
+                    Console.WriteLine("connecting database...");
+
+                    contextlocal = Context;//
+
+                    Console.WriteLine("connecting database...");
+                    
+                    IQuoteManagerUI quoteManagerUI = new QuoteManagerUI();
+
+                    IEntity quoteEntity = quoteManagerUI.GetQuoteEntity(contextlocal, quoteNumber);
+
+                    
+
+                    //ret = quoteManagerUI.AccepQuote(contextlocal, quoteEntity, orderNumber, exportFile, out IErrorMessageList ErrorMessageList);
+                    Environment.ExitCode = (int)quoteEntity.Id;
+                    }
+                 else
+                    {   
                     Environment.ExitCode = -2;
+                 }   
+                
+
+                    /*
+                    bool ret = Init(db, user);
+                    if (ret)
+                    {
+                        long quoteId;
+                        //bool status = AF_Export_Devis_Clipper.GetQuote(out quoteId);
+                        // Environment.ExitCode = (int)quoteId;
+                    }
+                    else
+                    {
+                        Environment.ExitCode = -2;
+                    }*/
                 }
-            }
 
             #endregion        }
         }
@@ -205,7 +248,7 @@ namespace AF_Export_Devis_Clipper
                 else
                 {
                     //recuperation de la derniere base ouverte
-                    MessageBox.Show("Database not found, please check clipper configuration.  ", db);
+                    MessageBox.Show("la base demandée par Clipper n'est pas detectée - > nom de la base demandée :" + db +", merci de revoir le nom de la base configurée dans les profiles clipper .  "+"\r\n", db);
                     return false;
                 }
             }
@@ -291,8 +334,10 @@ namespace AF_Export_Devis_Clipper
             quoteNumber = -1;
             orderNumber = null;
             exportFile = null;
-
-            if (arguments.Count() == 6)
+            //log chaine de connexion
+            
+            string argString = "";
+            if (arguments.Count() == 6 )
             {
                 foreach (string argument in arguments)
                 {
@@ -335,6 +380,8 @@ namespace AF_Export_Devis_Clipper
                         {//pas de texte dans cet argument
                             Environment.Exit(0);
                         }
+
+                        argString += "-" + val;
                       }
 
                     if (argument.StartsWith("OrderNumber", StringComparison.InvariantCultureIgnoreCase))
@@ -356,13 +403,38 @@ namespace AF_Export_Devis_Clipper
                                 }
                              
                     }
+
+
+
                 }
             }
             else
             {
-
+                //MessageBox.Show("Arguments manquants pour la recupération du devis dans almacam. Contacter Clipper");
 
             }
+
+           
+            using (System.IO.StreamWriter file =new System.IO.StreamWriter(Path.GetTempPath() + "\\argClipper.txt"))
+            {
+                foreach (string argument in arguments)
+                {
+
+                    string[] values = argument.Split(new string[] { "=" }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (string str in values)
+                    {
+                        argString +=" - "+ str.Trim();
+                    }
+                       
+
+
+                }
+
+
+                    file.WriteLine(argString);
+                
+            }
+
 
 
 

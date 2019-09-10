@@ -469,13 +469,6 @@ namespace AlmaCamTrainingTest
             SimplifiedMethods.NotifyMessage("Updating Database", "Done");
 
 
-            ///update parameters
-            //chaine de connexion// sp5 //
-
-            //ouverture du context
-
-            //IContext _Context = modelsRepository.GetModelContext(Lst_Model.Text);  //nom de la base;
-
 
             //import machineè
             ImportMachine();
@@ -562,8 +555,7 @@ namespace AlmaCamTrainingTest
             // create directory 
 
             //update clipper parameters
-
-
+            
             //parameterValue = _Context.ParameterSetManager.GetParameterValue("CLIP_CONFIGURATION", "MODEL_CA");
             if (_Context.ParameterSetManager.TryGetParameterValue("CLIP_CONFIGURATION", "MODEL_CA", out parameterValue))
             {
