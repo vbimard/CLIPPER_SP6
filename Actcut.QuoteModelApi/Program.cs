@@ -28,13 +28,13 @@ namespace AF_Export_Devis_Clipper
         private static string ResultFile = null;
         private static string ParamFile = null;
         private static string WorkFile = null;
-        //IContext contextlocal;
-        //
+        
+        // compatibilité SP6
         /*exemple argument
          Action=ExportQuote Db="AlmaCAM_Clipper" QuoteNumber="1" OrderNumber="alma" ExportFile="c:\temps"
-
+         exporte un devis d'almacam
          Action=GetQuote Db="AlmaCAM_Clipper" QuoteNumber="-1"
-             
+         affiche la fenetre de selection des devis    
              */
         static void Main(string[] args)
         {
@@ -49,9 +49,6 @@ namespace AF_Export_Devis_Clipper
 
             if (Directory.Exists(ParamFolder) == false) Directory.CreateDirectory(ParamFolder);
             string[] arguments = Environment.GetCommandLineArgs();
-
-            
-
             string action; string user; string db;
             long quoteNumber; string orderNumber; string exportFile;
             //on force a l'export
@@ -120,7 +117,7 @@ namespace AF_Export_Devis_Clipper
             #endregion
 
             #region Export Quote
-
+            /// exporte un devis
             else if (action == "ExportQuote" && db != null)
             {
                 bool ret = Init(db, user);
@@ -139,11 +136,6 @@ namespace AF_Export_Devis_Clipper
                     contextlocal = Context;//
 
                     Console.WriteLine("connecting database...");
-
-
-
-                    //  //
-
                     IQuoteManagerUI quoteManagerUI = new QuoteManagerUI();
                    
                     IEntity quoteEntity = quoteManagerUI.GetQuoteEntity(contextlocal, quoteNumber);
@@ -160,17 +152,8 @@ namespace AF_Export_Devis_Clipper
                         Environment.Exit(0);
                     }
 
-                    //IEntity quoteEntity = quoteManagerUI.GetQuoteEntity(contextlocal, devisid);
-                    //ret = quoteManagerUI.AccepQuote(contextlocal, quoteEntity, orderNumber, exportFile);
-                    ret = quoteManagerUI.AccepQuote(contextlocal, quoteEntity, orderNumber, exportFile, out IErrorMessageList ErrorMessageList);
-
-
-                    // bool AccepQuote(IContext Context, IEntity QuoteEntity, string OrderNumber, string GpExportFileName);
-                    // bool AccepQuote(IContext Context, IEntity QuoteEntity, string OrderNumber, string GpExportFileName, out IErrorMessageList ErrorMessageList);
-
-
-
-
+                  
+                    ret = quoteManagerUI.AccepQuote(contextlocal, quoteEntity, orderNumber, exportFile, out IErrorMessageList ErrorMessageList);         
                     Environment.ExitCode = (ret ? 0 : -1);
                 }
                 else
@@ -180,8 +163,9 @@ namespace AF_Export_Devis_Clipper
             }
             #endregion
 
-            #region Get Quote
-
+            #region GetQuote
+            ///affiche la fenetre de seleciton des devis
+            ///
             else if (action == "GetQuote" && db != null)
             {
 
@@ -203,13 +187,22 @@ namespace AF_Export_Devis_Clipper
                     Console.WriteLine("connecting database...");
                     
                     IQuoteManagerUI quoteManagerUI = new QuoteManagerUI();
-
                     IEntity quoteEntity = quoteManagerUI.GetQuoteEntity(contextlocal, quoteNumber);
+                    ///retour de la colonne reference pas de control
+                    ///
+                    string quotentity_reference="";
+                    quotentity_reference = quoteEntity.GetFieldValueAsString("_REFERENCE");
+                    //verification de caractere alphanumerique de la reference du devis
+                    for (int i = 0; i < quotentity_reference.Length; i++)
+                    {
+                        if (!char.IsLetter(quotentity_reference, i))
+                        { 
+                            MessageBox.Show("La reference du devis est alphanumeriques, ce devis ne peut etre recupéré.");
+                        quotentity_reference = ""; }
+                    }
+                   
 
-                    
-
-                    //ret = quoteManagerUI.AccepQuote(contextlocal, quoteEntity, orderNumber, exportFile, out IErrorMessageList ErrorMessageList);
-                    Environment.ExitCode = (int)quoteEntity.Id;
+                    Environment.ExitCode = Convert.ToInt32(quotentity_reference);
                     }
                  else
                     {   
@@ -217,18 +210,7 @@ namespace AF_Export_Devis_Clipper
                  }   
                 
 
-                    /*
-                    bool ret = Init(db, user);
-                    if (ret)
-                    {
-                        long quoteId;
-                        //bool status = AF_Export_Devis_Clipper.GetQuote(out quoteId);
-                        // Environment.ExitCode = (int)quoteId;
-                    }
-                    else
-                    {
-                        Environment.ExitCode = -2;
-                    }*/
+                   
                 }
 
             #endregion        }
@@ -254,14 +236,7 @@ namespace AF_Export_Devis_Clipper
             }
 
 
-            /*
-
-            if (CreateTransFile == null)
-            {
-                CreateTransFile = new CreateTransFile();
-                CreateTransFile.Init(Context);
-            }
-            */
+          
             return true;
         }
 
