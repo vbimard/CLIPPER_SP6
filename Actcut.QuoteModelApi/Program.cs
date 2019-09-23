@@ -152,8 +152,10 @@ namespace AF_Export_Devis_Clipper
                         Environment.Exit(0);
                     }
 
-                  
-                    ret = quoteManagerUI.AccepQuote(contextlocal, quoteEntity, orderNumber, exportFile, out IErrorMessageList ErrorMessageList);         
+                    //quoteManagerUI.AccepQuote
+                    // ret = quoteManagerUI.AccepQuote(contextlocal, quoteEntity, orderNumber, exportFile, out IErrorMessageList ErrorMessageList);
+                    ret =  quoteManagerUI.AccepQuote(contextlocal, quoteEntity, orderNumber, exportFile);
+                            
                     Environment.ExitCode = (ret ? 0 : -1);
                 }
                 else

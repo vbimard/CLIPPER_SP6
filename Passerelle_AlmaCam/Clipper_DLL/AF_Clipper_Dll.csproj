@@ -2,7 +2,7 @@
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <AlmaCamPath>c:\AlmaCam\Bin</AlmaCamPath>
+    <AlmaCamPath>C:\AlmaCam\Bin</AlmaCamPath>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F2B68199-A16B-4B40-B4FD-718126F984AF}</ProjectGuid>
@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>$(AlmaCamPath)</OutputPath>
+    <OutputPath>$(ALMACAM_BIN_PATH)</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,7 +28,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>$(AlmaCamPath)</OutputPath>
+    <OutputPath>$(ALMACAM_BIN_PATH)</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -37,7 +37,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\..\..\..\..\..\AlmaCAM\Bin\</OutputPath>
+    <OutputPath>$(ALMACAM_BIN_PATH)</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -46,7 +46,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>..\..\..\..\..\..\..\AlmaCAM\Bin\</OutputPath>
+    <OutputPath>$(ALMACAM_BIN_PATH)</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -58,52 +58,52 @@
   <ItemGroup>
     <Reference Include="Actcut.ActcutModel, Version=1.0.1.53042, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\AlmaCAM\Bin\Actcut.ActcutModel.dll</HintPath>
+      <HintPath>$(ALMACAM_BIN_PATH)\Actcut.ActcutModel.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Actcut.ActcutModelManager">
-      <HintPath>$(AlmaCamPath) ActcutModelManager.dll</HintPath>
+      <HintPath>$(ALMACAM_BIN_PATH) ActcutModelManager.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Actcut.CommonModel, Version=2.1.3.61522, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(AlmaCamPath) Actcut.CommonModel.dll</HintPath>
+      <HintPath>$(ALMACAM_BIN_PATH) Actcut.CommonModel.dll</HintPath>
     </Reference>
     <Reference Include="Actcut.NestingManager, Version=1.0.1.52024, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(AlmaCamPath) Actcut.NestingManager.dll</HintPath>
+      <HintPath>$(ALMACAM_BIN_PATH) Actcut.NestingManager.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Actcut.QuoteModel, Version=2.1.2.54719, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(AlmaCamPath) Actcut.QuoteModel.dll</HintPath>
+      <HintPath>$(ALMACAM_BIN_PATH) Actcut.QuoteModel.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Actcut.QuoteModelManager, Version=2.1.2.54719, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(AlmaCamPath) Actcut.QuoteModelManager.dll</HintPath>
+      <HintPath>$(ALMACAM_BIN_PATH) Actcut.QuoteModelManager.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Actcut.ResourceManager, Version=1.0.1.52024, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(AlmaCamPath) Actcut.ResourceManager.dll</HintPath>
+      <HintPath>$(ALMACAM_BIN_PATH) Actcut.ResourceManager.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Actcut.ResourceModel, Version=1.0.1.52024, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(AlmaCamPath) Actcut.ResourceModel.dll</HintPath>
+      <HintPath>$(ALMACAM_BIN_PATH) Actcut.ResourceModel.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="AF_ImportTools, Version=2.1.3.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\AlmaCAM\Bin\AF_ImportTools.dll</HintPath>
+      <HintPath>$(ALMACAM_BIN_PATH)\AF_ImportTools.dll</HintPath>
     </Reference>
     <Reference Include="Alma.BaseUI, Version=2.1.3.61522, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(AlmaCamPath) Alma.BaseUI.dll</HintPath>
+      <HintPath>$(ALMACAM_BIN_PATH) Alma.BaseUI.dll</HintPath>
     </Reference>
     <Reference Include="Alma.NetKernel">
-      <HintPath>$(AlmaCamPath) Alma.NetKernel.dll</HintPath>
+      <HintPath>$(ALMACAM_BIN_PATH) Alma.NetKernel.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -126,14 +126,14 @@
     </Reference>
     <Reference Include="Wpm.Implement.ModelSetting, Version=2.1.4.35644, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\AlmaCAM\Bin\Wpm.Implement.ModelSetting.dll</HintPath>
+      <HintPath>$(ALMACAM_BIN_PATH)\Wpm.Implement.ModelSetting.dll</HintPath>
     </Reference>
     <Reference Include="Wpm.Implement.Processor">
-      <HintPath>$(AlmaCamPath) Wpm.Implement.Processor.dll</HintPath>
+      <HintPath>$(ALMACAM_BIN_PATH)  Wpm.Implement.Processor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Wpm.Schema.Kernel">
-      <HintPath>$(AlmaCamPath) Wpm.Schema.Kernel.dll</HintPath>
+      <HintPath>$(ALMACAM_BIN_PATH) Wpm.Schema.Kernel.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>

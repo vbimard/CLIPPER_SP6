@@ -32,7 +32,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>$(CLIPPER_BIN_PATH)</OutputPath>
+    <OutputPath>..\..\..\..\..\..\..\AlmaCAM\Bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -41,7 +41,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>$(CLIPPER_BIN_PATH)</OutputPath>
+    <OutputPath>..\..\..\..\..\..\AlmaCAM\Bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -49,21 +49,21 @@
   <ItemGroup>
     <Reference Include="Actcut.QuoteModelManager, Version=2.1.3.58946, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(CLIPPER_BIN_PATH)\Actcut.QuoteModelManager.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\AlmaCAM\Bin\Actcut.QuoteModelManager.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="AF_Export_Devis_Clipper">
-      <HintPath>$(CLIPPER_BIN_PATH)\AF_Export_Devis_Clipper.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\AlmaCAM\Bin\AF_Export_Devis_Clipper.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="AF_ImportTools, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(CLIPPER_BIN_PATH)\AF_ImportTools.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\AlmaCAM\Bin\AF_ImportTools.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Alma.NetKernel, Version=2.1.3.61522, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(CLIPPER_BIN_PATH)\Alma.NetKernel.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\AlmaCAM\Bin\Alma.NetKernel.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -79,13 +79,13 @@
     <Reference Include="System.Xml" />
     <Reference Include="Wpm.Implement.Manager, Version=2.1.3.61077, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(CLIPPER_BIN_PATH)\Wpm.Implement.Manager.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\AlmaCAM\Bin\Wpm.Implement.Manager.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
       <Private>False</Private>
     </Reference>
     <Reference Include="Wpm.Schema.Kernel, Version=2.1.3.61077, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(CLIPPER_BIN_PATH)\Wpm.Schema.Kernel.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\AlmaCAM\Bin\Wpm.Schema.Kernel.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -138,8 +138,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "C:\Program Files (x86)\Clip Industrie\CLIPPER 8\AlmaCamUser2.exe"  "C:\AlmaCAM\Bin\AF_Export_Devis.exe"
-rem copy "C:\Program Files (x86)\Clip Industrie\CLIPPER 8\AF_Export_Devis.exe" "C:\AlmaCAM\Bin\AlmaCam_Clipper\DLL\SP6\AF_Export_Devis.exe"
-copy "C:\Program Files (x86)\Clip Industrie\CLIPPER 8\AlmaCamUser2.exe"  "\\ALMA-FILES\Technique-AS\SOFT\AlmaCam\Template\Clipper\DEBUG_CLIPPER\debug_DLL_SP6\AF_Export_Devis.exe"</PostBuildEvent>
+    <PostBuildEvent>copy "C:\AlmaCAM\Bin\AlmaCamUser2.exe"  "C:\AlmaCAM\Bin\AF_Export_Devis.exe"
+rem copy "C:\AlmaCAM\Bin\AF_Export_Devis.exe" "C:\AlmaCAM\Bin\AlmaCam_Clipper\DLL\SP6\AF_Export_Devis.exe"
+copy "C:\AlmaCAM\Bin\AlmaCamUser2.exe"  "\\ALMA-FILES\Technique-AS\SOFT\AlmaCam\Template\Clipper\DEBUG_CLIPPER\debug_DLL_SP6\AF_Export_Devis.exe"</PostBuildEvent>
   </PropertyGroup>
 </Project>

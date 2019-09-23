@@ -163,7 +163,7 @@ namespace AlmaCamTrainingTest
             {
                 foreach (IEntity nesting in nestingselector.SelectedEntity)
                 {
-                    StockManager.DeleteAlmaCamStock(nesting);
+                    StockManager.DeleteAlmaCamStock(nesting,0);
 
                 }
             }

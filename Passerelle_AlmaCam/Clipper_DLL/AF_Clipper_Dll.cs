@@ -4261,8 +4261,9 @@ namespace AF_Clipper_Dll
                 string idclip = Stock.GetFieldValueAsString("IDCLIP");
                 long dif = Clipper_Quantity - booked_qty;
                 //long finalqty = Clipper_Quantity;
-                if (dif <= 0)
-                {
+                //if (dif <= 0)
+                if (dif < 0)
+                    {
                     Alma_Log.Write_Log_Important(methodename + ":-----> stock clip " + idclip + ": qte clipper - quantité booked = " + dif.ToString());
                     rst = false;
                 }
@@ -4484,11 +4485,18 @@ namespace AF_Clipper_Dll
 
         public void Execute(IEntity ToCutSheet)
         {
-            //cloture//
-            //supression du stock alma
+            /*
             IEntity nesting = ToCutSheet.Context.EntityManager.GetEntity(ToCutSheet.GetFieldValueAsInt("_TO_CUT_NESTING"), "_NESTING");
             int nestingMultiplicity = nesting.GetFieldValueAsInt("_QUANTITY");
-            StockManager.DeleteAlmaCamStock(ToCutSheet);
+            StockManager.DeleteAlmaCamStock(ToCutSheet);*/
+            //cloture//
+            //supression du stock alma
+            //IEntity nesting = ToCutSheet.Context.EntityManager.GetEntity(ToCutSheet.GetFieldValueAsInt("_TO_CUT_NESTING"), "_NESTING");
+            //int nestingMultiplicity = nesting.GetFieldValueAsInt("_QUANTITY")
+            Clipper_Param.GetlistParam(ToCutSheet.Context);
+            int AF_ACTIVATE_QTY_ON_SENDTOWSHOP = (int)Clipper_Param.Parameters_Dictionnary.TryGetParam<long>("AF_ACTIVATE_QTY_ON_SENDTOWSHOP");
+
+            StockManager.DeleteAlmaCamStock(ToCutSheet, AF_ACTIVATE_QTY_ON_SENDTOWSHOP);
 
         }
     }
@@ -4631,6 +4639,7 @@ namespace AF_Clipper_Dll
                                     //cas des toles nulles
                                     if(tole.List_Offcut_Infos.Count() == 0)
                                     { tole.StockEntity.SetFieldValue("AF_GPAO_FILE", af_gpao_file_name);
+                                        tole.SheetEntity.Refresh(); // sinon plantage si on ecrit sur la meme tole en cas de mutliplicité
                                         tole.StockEntity.Save();
                                     }
                                     

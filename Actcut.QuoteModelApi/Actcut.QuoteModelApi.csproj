@@ -33,7 +33,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\..\AlmaCAM\Bin\</OutputPath>
+    <OutputPath>.$(CLIPPER_BIN_PATH)</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -42,7 +42,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\..\..\AlmaCAM\Bin\</OutputPath>
+    <OutputPath>$(CLIPPER_BIN_PATH)</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -56,29 +56,29 @@
   <ItemGroup>
     <Reference Include="Actcut.ActcutModelManagerUI, Version=2.1.5.41726, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\AlmaCAM\Bin\Actcut.ActcutModelManagerUI.dll</HintPath>
+      <HintPath>$(CLIPPER_BIN_PATH)\Actcut.ActcutModelManagerUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="AF_Actcut.ActcutClipperApi">
-      <HintPath>..\..\..\..\..\..\AlmaCAM\Bin\AF_Actcut.ActcutClipperApi.dll</HintPath>
+      <HintPath>$(CLIPPER_BIN_PATH)\AF_Actcut.ActcutClipperApi.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="AF_Export_Devis_Clipper">
-      <HintPath>..\..\..\..\..\..\AlmaCAM\Bin\AF_Export_Devis_Clipper.dll</HintPath>
+      <HintPath>$(CLIPPER_BIN_PATH)AF_Export_Devis_Clipper.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="AF_ImportTools">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Clip Industrie\CLIPPER 8\AF_ImportTools.dll</HintPath>
+      <HintPath>$(CLIPPER_BIN_PATH)\AF_ImportTools.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Alma.BaseUI, Version=2.1.5.64604, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\AlmaCAM\Bin\Alma.BaseUI.dll</HintPath>
+      <HintPath>$(CLIPPER_BIN_PATH)\Alma.BaseUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Alma.NetKernel, Version=2.1.5.64604, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\AlmaCAM\Bin\Alma.NetKernel.dll</HintPath>
+      <HintPath>$(CLIPPER_BIN_PATH)\Alma.NetKernel.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -91,17 +91,17 @@
     <Reference Include="System.Xml" />
     <Reference Include="Wpm.Implement.ComponentEditor, Version=2.1.5.64604, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\AlmaCAM\Bin\Wpm.Implement.ComponentEditor.dll</HintPath>
+      <HintPath>$(CLIPPER_BIN_PATH)\Wpm.Implement.ComponentEditor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Wpm.Implement.Manager, Version=2.1.5.64604, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\AlmaCAM\Bin\Wpm.Implement.Manager.dll</HintPath>
+      <HintPath>$(CLIPPER_BIN_PATH)\Wpm.Implement.Manager.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Wpm.Schema.Kernel, Version=2.1.6.43236, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\AlmaCAM\Bin\Wpm.Schema.Kernel.dll</HintPath>
+      <HintPath>$(CLIPPER_BIN_PATH)\Wpm.Schema.Kernel.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
