@@ -61,7 +61,7 @@ namespace AF_Export_Devis_Clipper
             { arg += s + " "; }
             MessageBox.Show(arg);
             MessageBox.Show(action +" user "+ user + " database "+ db + " quote number "+ quoteNumber + " order "+ orderNumber + " export "+ exportFile + " "  );
-#endif
+            #endif
 
             action=arguments[1].Split('=')[1];
 
@@ -199,8 +199,9 @@ namespace AF_Export_Devis_Clipper
                     {
                         if (!char.IsLetter(quotentity_reference, i))
                         { 
-                            MessageBox.Show("La reference du devis est alphanumeriques, ce devis ne peut etre recupéré.");
-                        quotentity_reference = ""; }
+                        MessageBox.Show("La reference du devis est alphanumeriques, ce devis ne peut etre recupéré.");
+                        quotentity_reference = "";
+                        }
                     }
                    
 

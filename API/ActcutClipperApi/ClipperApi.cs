@@ -60,7 +60,12 @@ namespace AF_Actcut.ActcutClipperApi
         }
 
        
-
+        /// <summary>
+        /// connexion a la base almacam
+        /// </summary>
+        /// <param name="databaseName">nom de la base</param>
+        /// <param name="user">utilisateur</param>
+        /// <returns></returns>
         public bool ConnectAlmaCamDatabase(string databaseName, string user)
         {
 
@@ -118,11 +123,9 @@ namespace AF_Actcut.ActcutClipperApi
 
                 if (quoteEntity != null)
                 {
-                    //string quoteReference = quoteEntity.GetFieldValueAsString("_REFERENCE");
+                  
                     quoteNumberReference =Convert.ToInt64( quoteEntity.GetFieldValueAsString("_REFERENCE"));
-                    //quoteNumberReference = quoteEntity.Id;
-
-                    //long.TryParse(quoteReference, out quoteNumberReference);
+                  
                     return true;
                 }
                 else
@@ -162,8 +165,8 @@ namespace AF_Actcut.ActcutClipperApi
                     {
 
                         string reference = quoteentity.GetFieldValueAsString("_REFERENCE");
-                        string user = quoteentity.GetFieldValueAsString("_REFERENCE");
-                        string date = quoteentity.GetFieldValueAsString("_REFERENCE");
+                        //string user = quoteentity.GetFieldValueAsString("_REFERENCE");
+                        //string date = quoteentity.GetFieldValueAsString("_REFERENCE");
 
                     }
                     return true;
