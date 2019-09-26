@@ -74,7 +74,7 @@
             this.groupBox1.Controls.Add(this.Init);
             this.groupBox1.Controls.Add(this.Reset);
             this.groupBox1.Controls.Add(this.ExportUI);
-            this.groupBox1.Location = new System.Drawing.Point(289, 0);
+            this.groupBox1.Location = new System.Drawing.Point(299, 50);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(142, 151);
             this.groupBox1.TabIndex = 20;
@@ -112,7 +112,7 @@
             // 
             // Export
             // 
-            this.Export.Location = new System.Drawing.Point(302, 70);
+            this.Export.Location = new System.Drawing.Point(312, 120);
             this.Export.Name = "Export";
             this.Export.Size = new System.Drawing.Size(112, 23);
             this.Export.TabIndex = 17;
@@ -122,7 +122,7 @@
             // 
             // txtQuoteid
             // 
-            this.txtQuoteid.Location = new System.Drawing.Point(213, 39);
+            this.txtQuoteid.Location = new System.Drawing.Point(213, 87);
             this.txtQuoteid.Name = "txtQuoteid";
             this.txtQuoteid.Size = new System.Drawing.Size(52, 20);
             this.txtQuoteid.TabIndex = 12;
@@ -130,7 +130,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(78, 41);
+            this.label1.Location = new System.Drawing.Point(78, 89);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(43, 13);
             this.label1.TabIndex = 11;
@@ -139,7 +139,7 @@
             // comboDataBaseList
             // 
             this.comboDataBaseList.FormattingEnabled = true;
-            this.comboDataBaseList.Location = new System.Drawing.Point(81, 12);
+            this.comboDataBaseList.Location = new System.Drawing.Point(81, 60);
             this.comboDataBaseList.Name = "comboDataBaseList";
             this.comboDataBaseList.Size = new System.Drawing.Size(184, 21);
             this.comboDataBaseList.TabIndex = 15;
@@ -147,7 +147,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 102);
+            this.label3.Location = new System.Drawing.Point(15, 150);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(37, 13);
             this.label3.TabIndex = 19;
@@ -156,7 +156,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 124);
+            this.label2.Location = new System.Drawing.Point(15, 172);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(28, 13);
             this.label2.TabIndex = 18;
@@ -165,7 +165,7 @@
             // linkemf
             // 
             this.linkemf.AutoSize = true;
-            this.linkemf.Location = new System.Drawing.Point(58, 124);
+            this.linkemf.Location = new System.Drawing.Point(58, 172);
             this.linkemf.Name = "linkemf";
             this.linkemf.Size = new System.Drawing.Size(45, 13);
             this.linkemf.TabIndex = 17;
@@ -175,7 +175,7 @@
             // linkquote
             // 
             this.linkquote.AutoSize = true;
-            this.linkquote.Location = new System.Drawing.Point(58, 102);
+            this.linkquote.Location = new System.Drawing.Point(58, 150);
             this.linkquote.Name = "linkquote";
             this.linkquote.Size = new System.Drawing.Size(45, 13);
             this.linkquote.TabIndex = 16;
@@ -185,7 +185,7 @@
             // status
             // 
             this.status.AutoSize = true;
-            this.status.Location = new System.Drawing.Point(14, 81);
+            this.status.Location = new System.Drawing.Point(14, 129);
             this.status.Name = "status";
             this.status.Size = new System.Drawing.Size(16, 13);
             this.status.TabIndex = 14;
@@ -194,7 +194,7 @@
             // Select_Quote
             // 
             this.Select_Quote.Enabled = false;
-            this.Select_Quote.Location = new System.Drawing.Point(81, 70);
+            this.Select_Quote.Location = new System.Drawing.Point(81, 118);
             this.Select_Quote.Name = "Select_Quote";
             this.Select_Quote.Size = new System.Drawing.Size(184, 23);
             this.Select_Quote.TabIndex = 21;
@@ -206,7 +206,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(449, 155);
+            this.ClientSize = new System.Drawing.Size(449, 212);
             this.Controls.Add(this.Select_Quote);
             this.Controls.Add(this.Export);
             this.Controls.Add(this.label1);

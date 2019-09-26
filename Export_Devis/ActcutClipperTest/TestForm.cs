@@ -12,6 +12,7 @@ using System.Diagnostics;
 
 using AF_Actcut.ActcutClipperApi;
 using Wpm.Implement.Manager;
+using System.Reflection;
 //using AF_Actcut.ActcutClipperApi;
 
 namespace ActcutClipperTest
@@ -162,12 +163,14 @@ namespace ActcutClipperTest
             AlmaCamDB = comboDataBaseList.Text;///txt_Database.Text;;
             User = "SUPER";
             ClipperApi = new ClipperApi();
+            
+            if (string.IsNullOrEmpty(AlmaCamDB)!=true){
             ClipperApi.ConnectAlmaCamDatabase(AlmaCamDB, User);
-
             this.Init.Enabled = false;
             this.Export.Enabled = true;
             this.ExportUI.Enabled = true;
             this.Select_Quote.Enabled = true;
+            }
         }
 
         private void Export_Click(object sender, EventArgs e)
@@ -212,5 +215,53 @@ namespace ActcutClipperTest
 
 
         }
+
+        private void dependencesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+
+           
+            try
+            {
+                MessageBox.Show(string.Join("\r\n", GetDependentFiles(Assembly.GetEntryAssembly())));
+            }
+            catch (Exception )
+            {
+                
+            }
+            finally { }
+
+           
+        }
+
+        private readonly string[] _extensions = { ".dll" };//".exe", ".pdb", ".dll.config", ".exe.config"
+
+        private string[] GetDependentFiles(Assembly assembly)
+        {
+            AssemblyName[] asm = assembly.GetReferencedAssemblies();
+            List<string> paths = new List<string>(asm.Length);
+            for (int t = asm.Length - 1; t >= 0; t--)
+            {
+                for (int e = _extensions.Length - 1; e >= 0; e--)
+                {
+                    string path = Path.GetFullPath(asm[t].Name + _extensions[e]);
+                    if (File.Exists(path)) paths.Add(path);
+                }
+            }
+
+            return paths.ToArray();
+        }
+
+
+
+
     }
-}
+
+
+
+
+
+
+    }
+  //  }
+//}

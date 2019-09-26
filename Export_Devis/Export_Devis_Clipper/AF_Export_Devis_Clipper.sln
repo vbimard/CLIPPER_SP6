@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActcutClipperTestAPI_EXE", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AF_Actcut.ActcutClipperApi_DLL", "..\ActcutClipperApi\AF_Actcut.ActcutClipperApi_DLL.csproj", "{8D33F151-8A5E-458C-82A0-C71606C09DA5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Actcut.QuoteModelApi", "..\Actcut.QuoteModelApi\Actcut.QuoteModelApi.csproj", "{57004F8A-AE6A-49B0-8A7A-E2DB43BB1E23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,18 @@ Global
 		{8D33F151-8A5E-458C-82A0-C71606C09DA5}.x86|Any CPU.Build.0 = Release|Any CPU
 		{8D33F151-8A5E-458C-82A0-C71606C09DA5}.x86|x86.ActiveCfg = Release|Any CPU
 		{8D33F151-8A5E-458C-82A0-C71606C09DA5}.x86|x86.Build.0 = Release|Any CPU
+		{57004F8A-AE6A-49B0-8A7A-E2DB43BB1E23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57004F8A-AE6A-49B0-8A7A-E2DB43BB1E23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57004F8A-AE6A-49B0-8A7A-E2DB43BB1E23}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{57004F8A-AE6A-49B0-8A7A-E2DB43BB1E23}.Debug|x86.Build.0 = Debug|Any CPU
+		{57004F8A-AE6A-49B0-8A7A-E2DB43BB1E23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57004F8A-AE6A-49B0-8A7A-E2DB43BB1E23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57004F8A-AE6A-49B0-8A7A-E2DB43BB1E23}.Release|x86.ActiveCfg = Release|Any CPU
+		{57004F8A-AE6A-49B0-8A7A-E2DB43BB1E23}.Release|x86.Build.0 = Release|Any CPU
+		{57004F8A-AE6A-49B0-8A7A-E2DB43BB1E23}.x86|Any CPU.ActiveCfg = Release|Any CPU
+		{57004F8A-AE6A-49B0-8A7A-E2DB43BB1E23}.x86|Any CPU.Build.0 = Release|Any CPU
+		{57004F8A-AE6A-49B0-8A7A-E2DB43BB1E23}.x86|x86.ActiveCfg = Release|Any CPU
+		{57004F8A-AE6A-49B0-8A7A-E2DB43BB1E23}.x86|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

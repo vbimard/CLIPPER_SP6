@@ -1,0 +1,1 @@
+AsmSpy C:\Program Files (x86)\Clip Industrie\CLIPPER 8\*.dll

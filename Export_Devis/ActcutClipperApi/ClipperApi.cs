@@ -94,9 +94,13 @@ namespace AF_Actcut.ActcutClipperApi
             if (_Context != null)
             {
                 IQuoteManagerUI quoteManagerUI = new QuoteManagerUI();
+
+                
                 IEntity quoteEntity = quoteManagerUI.GetQuoteEntity(_Context, quoteNumber);
-                ret = quoteManagerUI.AccepQuote(_Context, quoteEntity, orderNumber, exportFile);
-               
+                if (Control_quote_Integrity(quoteEntity))
+                {
+                    ret = quoteManagerUI.AccepQuote(_Context, quoteEntity, orderNumber, exportFile);
+                }
             }
             return ret;
         }
@@ -108,7 +112,11 @@ namespace AF_Actcut.ActcutClipperApi
         /// <returns></returns>
         public bool SelectQuoteUI(out long quoteNumberReference)
         {
+            bool rst=false;
             quoteNumberReference = -1;
+            long quoteid=0;
+            try { 
+            
             if (_Context != null)
             {
                 IEntity quoteEntity = null;
@@ -117,16 +125,25 @@ namespace AF_Actcut.ActcutClipperApi
                 entitySelector.MultiSelect = false;
                 entitySelector.ShowPropertyBox = false;
                 if (entitySelector.ShowDialog() == DialogResult.OK)
-                    quoteEntity = entitySelector.SelectedEntity.FirstOrDefault();
+                quoteEntity = entitySelector.SelectedEntity.FirstOrDefault();
 
                 if (_UserOk) _Context.SaveUserModel();
 
                 if (quoteEntity != null)
-                {
-                  
-                    quoteNumberReference =Convert.ToInt64( quoteEntity.GetFieldValueAsString("_REFERENCE"));
-                  
-                    return true;
+                { //control de l'integrité des donnees
+                        rst = Control_quote_Integrity(quoteEntity);
+                        if (rst == true)
+                        {
+                            quoteid = quoteEntity.Id32;
+                            string quoteref = "0";
+                            quoteref = quoteEntity.GetFieldValueAsString("_REFERENCE");
+                            quoteNumberReference = Convert.ToInt64(quoteref);
+                        }
+                    //Convert.ToInt64( quoteEntity.GetFieldValueAsString("_REFERENCE"));
+                                                
+                       
+
+                    return rst;
                 }
                 else
                 {
@@ -137,6 +154,71 @@ namespace AF_Actcut.ActcutClipperApi
             {
                 return false;
             }
+            }
+
+            //catch (Exception ie) { return rst; }
+            catch (FormatException ex ) {
+                string text = "Impossible de faire d'import sur ce devis.\r\nLa reference Almacam du devis " + quoteid + 
+                    " contient des caracteres alphanumeriques.";
+                MessageBox.Show(text, "SelectQuoteUI");
+                return rst; }
+        }
+
+        public bool Control_quote_Integrity(IEntity quoteEntity)
+        {
+            bool rst=true; //valide par defaut
+            quoteEntity = quoteEntity.Context.EntityManager.GetEntity(quoteEntity.Id32, "_QUOTE_REQUEST"); //AF_ImportTools.SimplifiedMethods.GetFirtOfList(quotes);
+            ITransaction transaction = quoteEntity.Context.CreateTransaction();
+            IQuote iquote = new Quote(transaction, quoteEntity);
+
+            try
+            {
+
+                ///vrefication des pieces
+                ///
+                bool sansDoublons = true;
+                List<String> ListSansDuplication = new List<String>();
+                foreach (IEntity partEntity in iquote.QuotePartList)
+                {
+
+                    if (!ListSansDuplication.Contains(partEntity.GetFieldValueAsString("_REFERENCE")))
+                        ListSansDuplication.Add(partEntity.GetFieldValueAsString("_REFERENCE"));
+                    else
+                    {
+                        sansDoublons = false;
+                        string text = "Impossible de faire d'import du devis " + quoteEntity.Id32 + ".\r\nCe devis contient plusieurs pieces du meme nom (reference) ";
+                        MessageBox.Show(text, "Control_quote_Integrity");
+                        break;
+                    }
+
+                }
+                ///verification client simple message
+                string risk = quoteEntity.GetFieldValueAsEntity("_FIRM").GetFieldValueAsString("_FINANCIAL_RISK");
+                if (risk != "0") { MessageBox.Show("Attention !! le  client " + quoteEntity.GetFieldValueAsEntity("_FIRM").GetFieldValueAsString("_NAME") + " possede des conditions de blocage sur Clipper", "Control_quote_Integrity"); }
+               
+                ///verification du format de l'id du devis, il ne doi pas contenir de caracteres alphanumerique
+                //quoteid = quoteEntity.Id32;
+                string quoteref = "0";
+                quoteref = quoteEntity.GetFieldValueAsString("_REFERENCE");
+                Convert.ToInt64(quoteref);
+
+
+
+                rst = rst && sansDoublons;
+
+                return rst;
+
+            }
+
+            catch (FormatException ex)
+            {
+                string text = "Impossible de faire d'import sur ce devis.\r\nLa reference Almacam du devis selectionné contient des caracteres alphanumeriques.";
+                MessageBox.Show(text, "Control_quote_Integrity");
+                return rst;
+            }
+            catch { return rst; }
+            finally { }
+            
         }
 
 

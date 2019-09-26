@@ -139,7 +139,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "C:\Program Files (x86)\Clip Industrie\CLIPPER 8\AlmaCamUser2.exe"  "C:\AlmaCAM\Bin\AF_Export_Devis.exe"
-rem copy "C:\Program Files (x86)\Clip Industrie\CLIPPER 8\AF_Export_Devis.exe" "C:\AlmaCAM\Bin\AlmaCam_Clipper\DLL\SP6\AF_Export_Devis.exe"
+copy "C:\Program Files (x86)\Clip Industrie\CLIPPER 8\AlmaCamUser2.exe" "C:\Program Files (x86)\Clip Industrie\CLIPPER_8_ALMACAM\AF_Export_Devis.exe"
 copy "C:\Program Files (x86)\Clip Industrie\CLIPPER 8\AlmaCamUser2.exe"  "\\ALMA-FILES\Technique-AS\SOFT\AlmaCam\Template\Clipper\DEBUG_CLIPPER\debug_DLL_SP6\AF_Export_Devis.exe"</PostBuildEvent>
   </PropertyGroup>
 </Project>
